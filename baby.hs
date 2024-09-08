@@ -1,5 +1,3 @@
-import Distribution.Compat.Lens (_1)
-
 doubleMe x = x + x
 
 doubleUs x y = x * 2 + y * 2
@@ -180,3 +178,19 @@ quicksort (x : xs) =
   let smallerOrEqual = [a | a <- xs, a <= x]
       larger = [a | a <- xs, a > x]
    in quicksort smallerOrEqual ++ [x] ++ quicksort larger
+
+multiThree :: Int -> Int -> Int -> Int
+-- multiThree :: Int -> (Int -> (Int -> Int)) you can also write like this
+-- In Golang https://go.dev/play/p/IVC9cHlC0Eb
+multiThree x y z = x * y * z
+
+compareWithHundred :: Int -> Ordering
+compareWithHundred x = compare 100 x
+
+-- compareWithHundred = compare 100 you can also write like this
+
+divideByTen :: (Floating a) => a -> a
+divideByTen = (/ 10)
+
+isUpperAlphanum :: Char -> Bool
+isUpperAlphanum = (`elem` ['A' .. 'Z'])
