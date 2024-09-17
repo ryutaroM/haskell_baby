@@ -216,3 +216,10 @@ remindLet x =
   let y = 2
       z = 3
    in x + y + z
+
+quicksort''' :: (Ord a) => [a] -> [a]
+quicksort''' [] = []
+quicksort''' (x : xs) =
+  let smallerOrEqual = filter (<= x) xs
+      larger = filter (> x) xs
+   in quicksort''' smallerOrEqual ++ [x] ++ quicksort''' larger
