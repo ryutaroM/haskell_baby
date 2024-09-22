@@ -239,3 +239,15 @@ numLongChains :: Int
 numLongChains = length (filter isLong (map chain [1 .. 100]))
   where
     isLong xs = length xs > 15
+
+numLongChains' :: Int
+numLongChains' = length (filter (\xs -> length xs > 15) (map chain [1 .. 100]))
+
+flip''' :: (a -> b -> c) -> b -> a -> c
+flip''' f = \x y -> f y x
+
+sum' :: (Num a) => [a] -> a
+sum' = foldl (+) 0
+
+map' :: (a -> b) -> [a] -> [b]
+map' f xs = foldr (\x acc -> f x : acc) [] xs
