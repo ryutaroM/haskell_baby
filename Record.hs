@@ -1,3 +1,4 @@
+import Data.Foldable qualified as F
 import Data.Map qualified as Map
 
 -- data Person = Person String String Int Float String String deriving (Show)
@@ -141,6 +142,10 @@ Empty' ^++ ys = ys
 
 data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show)
 
+instance F.Foldable Tree where
+  foldMap f EmptyTree = mempty
+  foldMap f (Node x l r) = F.foldMap f l `mappend` f x `mappend` F.foldMap f r
+
 singleTone :: a -> Tree a
 singleTone x = Node x EmptyTree EmptyTree
 
@@ -203,3 +208,29 @@ yesnoIf yesnoVal yesResult noResult = if yesno yesnoVal then yesResult else noRe
 instance Functor Tree where
   fmap f EmptyTree = EmptyTree
   fmap f (Node x left right) = Node (f x) (fmap f left) (fmap f right)
+
+testTree =
+  Node
+    5 -- root
+    ( Node
+        3 -- left
+        (Node 1 EmptyTree EmptyTree)
+        (Node 6 EmptyTree EmptyTree)
+    )
+    ( Node
+        9 -- right
+        (Node 8 EmptyTree EmptyTree)
+        (Node 10 EmptyTree EmptyTree)
+    )
+
+-- testTreeの構造を図で示します
+--         5
+--        / \
+--       3   9
+--      / \ / \
+--     1  6 8  10
+
+-- main :: IO ()
+-- main = do
+--   print $ F.foldl (+) 0 testTree
+--   print $ F.foldl (*) 1 testTree
